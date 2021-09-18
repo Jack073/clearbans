@@ -24,7 +24,7 @@ var (
 func init() {
 	flag.Uint64Var((*uint64)(&guild), "guild", 0, "The guild to manage bans for")
 	flag.BoolVar(&deletedOnly, "deleted", false, "Whether or not to only delete bans for deleted account")
-	flag.StringVar(&reason, "reason", "[clearbans]: no reason provided", "The reason to include in the audit log")
+	flag.StringVar(&reason, "reason", "[ClearBans]: no reason provided", "The reason to include in the audit log")
 	flag.StringVar(&logFile, "logfile", "", "The file to write the logs to (required for bans, but new logs are only available when unbanning)")
 	flag.StringVar(&mode, "mode", "unban", "Mode of operation: whether to unban users, or re-ban all users in the log file (`ban` or `unban`")
 
