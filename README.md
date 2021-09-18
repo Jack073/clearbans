@@ -32,3 +32,6 @@ clearbans
 	--reason [string]
 		The reason to use when unbanning accounts.
 ```
+
+## Authentication
+To be able to use this program, you'll also need to have the token of a bot in the guild you want to edit the ban list of (the bot must have the manage bans permission). Then simply add that token as an environment variable called `TOKEN`.
