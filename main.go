@@ -6,6 +6,7 @@ import (
 	"github.com/Postcord/objects"
 	"github.com/Postcord/rest"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -23,12 +24,59 @@ var (
 
 func init() {
 	flag.Uint64Var((*uint64)(&guild), "guild", 0, "The guild to manage bans for")
+	flag.Uint64("g", 0, "The guild to manage bans for")
+
 	flag.BoolVar(&deletedOnly, "deleted", false, "Whether or not to only delete bans for deleted account")
+	flag.Bool("d", false, "Whether or not to only delete bans for deleted account")
+
 	flag.StringVar(&reason, "reason", "[ClearBans]: no reason provided", "The reason to include in the audit log")
+	flag.String("r", "[ClearBans]: no reason provided", "The reason to include in the audit log")
+
 	flag.StringVar(&logFile, "logfile", "", "The file to write the logs to (required for bans, but new logs are only available when unbanning)")
-	flag.StringVar(&mode, "mode", "unban", "Mode of operation: whether to unban users, or re-ban all users in the log file (`ban` or `unban`")
+	flag.String("l", "", "The file to write the logs to (required for bans, but new logs are only available when unbanning)")
+
+	flag.StringVar(&mode, "mode", "", "Mode of operation: whether to unban users, or re-ban all users in the log file (`ban` or `unban`")
+	flag.String("m", "", "Mode of operation: whether to unban users, or re-ban all users in the log file (`ban` or `unban`")
 
 	flag.Parse()
+
+	if guild == 0 {
+		f := flag.Lookup("g")
+		if f != nil {
+			b, err := strconv.ParseUint(f.Value.String(), 10, 64)
+			if err == nil {
+				guild = objects.Snowflake(b)
+			}
+		}
+	}
+
+	if !deletedOnly {
+		f := flag.Lookup("d")
+		if f != nil && f.Value.String() == "true" {
+			deletedOnly = true
+		}
+	}
+
+	if logFile == "" {
+		f := flag.Lookup("l")
+		if f != nil && f.Value.String() != "" {
+			logFile = f.Value.String()
+		}
+	}
+
+	if mode == "" {
+		f := flag.Lookup("m")
+		if f != nil && f.Value.String() != "" {
+			mode = f.Value.String()
+		}
+	}
+
+	if reason == "[ClearBans]: no reason provided" {
+		f := flag.Lookup("r")
+		if f != nil && f.Value.String() != "" {
+			reason = f.Value.String()
+		}
+	}
 
 	if token == "" {
 		panic("Empty TOKEN env var")

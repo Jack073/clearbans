@@ -15,20 +15,25 @@ clearbans
 	--help
 		Shows a summary of the different flags available.
 
+    --d
 	--deleted
 		Unban suspected deleted accounts only (Deleted User XXXXXXX#1234).
 
+    --g
 	--guild <id>
 		The ID of the guild of the ban list (bot must be in this guild with manage bans permissions).
 
+    --m
 	--mode [ban|unban]
 		The mode of operation - whether to unban accounts, or reban all those in the given logfile. Defaults to unban.
 
+    --l
 	--logfile [file]
 		The name of the file to write logs to (optional for unban).
 		Note (unbans only): if set, this will also generate another file "<file>.dat" which contains an easily machine parsable record of all the bans and the associated reasons.
 		Note (bans only): this is required for rebanning users, and you must supply the file exactly as you did when you ran it in unban mode - it will automatically add the .dat suffix and choose the correct file.
 
+    --r
 	--reason [string]
 		The reason to use when unbanning accounts.
 ```
